@@ -1,0 +1,25 @@
+You are improving a small static web app in /Users/chrismychen/.openclaw/workspace/apps/janes-walk-nyc-2026.
+
+Goal: transform the current single-file Jane's Walk NYC 2026 explorer into a much more polished, mobile-friendly, modern static app WITHOUT changing the underlying data model/use cases. Keep using the existing data/events-merged.json. No frameworks required unless clearly worth it; prefer a robust static implementation that can run from the existing simple local server.
+
+First inspect the current app and its usage model. Then research briefly (using available web access if useful) best practices for mobile-friendly filter/search/list UIs for event directories. Then implement a polished version with improvements like:
+- strong information hierarchy
+- responsive/mobile-first filter UX
+- sticky compact controls or filter drawer on mobile
+- better cards and typography
+- visible active filters and clear-all
+- sort options if useful
+- count summaries
+- better empty state
+- accessible controls and semantics
+- polished spacing/colors/layout
+- preserve booking links
+- preserve full description and duration
+- make it feel thoughtfully designed, not just styled
+
+You may restructure index.html and add small supporting files if helpful, but keep it simple to serve statically from python http.server. Make the app look production-worthy.
+
+After editing, briefly summarize exactly what changed and any notable UX choices.
+
+When completely finished, run this command to notify me:
+openclaw system event --text "Done: polished Jane's Walk app UI pass completed" --mode now

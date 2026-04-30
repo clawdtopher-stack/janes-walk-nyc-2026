@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jane's Walk NYC 2026</title>
+  <meta name="description" content="Discover Jane's Walk NYC 2026 through a refined, mobile-friendly explorer with filters for date, time, borough, neighborhood, and walk type." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Jane's Walk NYC · May 1–3</p>
+          <h1 class="hero-title">A citywide guide to 349 community-led walks.</h1>
+          <p class="hero-sub">Browse by day, time, borough, neighborhood, or walk type. Designed for quick mobile planning, deep browsing, and actual decision-making.</p>
+          <div class="hero-actions">
+            <button class="primary-action" id="jumpToFilters">Start exploring</button>
+            <div class="hero-proof">
+              <span class="proof-pill">349 walks</span>
+              <span class="proof-pill">5 boroughs</span>
+              <span class="proof-pill">Free & community-led</span>
+            </div>
+          </div>
+        </div>
+        <aside class="hero-feature-card" aria-label="Why this is useful">
+          <div class="feature-stat">
+            <span class="feature-stat-value" id="heroStatTotal">349</span>
+            <span class="feature-stat-label">walks in one place</span>
+          </div>
+          <ul class="feature-list">
+            <li>Fast filtering for mobile</li>
+            <li>Readable cards with full descriptions</li>
+            <li>Direct links to MAS booking pages</li>
+            <li>Virtual / on-demand walks included</li>
+          </ul>
+        </aside>
+      </div>
+    </header>
+
+    <div class="sticky-shell" id="filtersAnchor">
+      <div class="toolbar-top">
+        <div class="container toolbar-top-inner">
+          <div>
+            <p class="toolbar-label">Explore</p>
+            <h2 class="toolbar-title">Find the right walk fast</h2>
+          </div>
+          <button class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h14M5 10h10M7 15h6"/></svg>
+            <span>Filters</span>
+            <span class="filter-badge" id="filterBadge" hidden>0</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-backdrop" id="filterBackdrop" hidden></div>
+      <aside class="filter-panel" id="filterPanel" aria-label="Filters">
+        <div class="filter-panel-header">
+          <div>
+            <p class="filter-panel-eyebrow">Refine results</p>
+            <h3 class="filter-panel-title">Filters & sorting</h3>
+          </div>
+          <button class="filter-panel-close" id="filterClose" aria-label="Close filters">&times;</button>
+        </div>
+
+        <div class="filter-body">
+          <div class="filter-group filter-group-search">
+            <label class="filter-label" for="search">Search</label>
+            <div class="search-wrap">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg>
+              <input class="filter-input" id="search" type="text" placeholder="Title, description, neighborhood…" autocomplete="off" />
+              <button class="search-clear" id="searchClear" aria-label="Clear search" hidden>&times;</button>
+            </div>
+          </div>
+
+          <div class="filter-grid">
+            <div class="filter-group">
+              <label class="filter-label">Date</label>
+              <div class="pill-group" id="datePills" aria-label="Date filters"></div>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">Time of day</label>
+              <div class="pill-group" id="timePills" aria-label="Time of day filters"></div>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">Borough</label>
+              <div class="pill-group" id="boroughPills" aria-label="Borough filters"></div>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">Neighborhood</label>
+              <div class="pill-group pill-group-scroll" id="neighborhoodPills" aria-label="Neighborhood filters"></div>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">Walk type</label>
+              <div class="pill-group" id="walkTypePills" aria-label="Walk type filters"></div>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label" for="sort">Sort by</label>
+              <select class="filter-select" id="sort">
+                <option value="date">Date &amp; time</option>
+                <option value="title">Title A–Z</option>
+                <option value="borough">Borough</option>
+                <option value="duration">Duration</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-footer">
+          <button class="btn-clear" id="clearAll">Clear all</button>
+          <button class="btn-apply" id="applyFilters">Apply filters</button>
+        </div>
+      </aside>
+    </div>
+
+    <section class="results-shell">
+      <div class="container">
+        <div class="results-header">
+          <div>
+            <p class="results-kicker">Results</p>
+            <p class="stats" id="stats">Loading…</p>
+          </div>
+          <div class="active-filters" id="activeFilters" aria-label="Active filters"></div>
+        </div>
+
+        <main class="main-grid" id="grid"></main>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="20"/><path d="M16 28s3 4 8 4 8-4 8-4"/><circle cx="18" cy="20" r="1.5" fill="currentColor"/><circle cx="30" cy="20" r="1.5" fill="currentColor"/></svg>
+          </div>
+          <h3 class="empty-title">Nothing matches those filters</h3>
+          <p class="empty-sub">Try clearing a few filters or broadening the search.</p>
+          <button class="btn-clear" id="emptyClear">Clear all filters</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>Data sourced from <a href="https://www.mas.org/janeswalk/" target="_blank" rel="noopener">Municipal Art Society</a>. Jane's Walk is a movement of free, citizen-led walking tours.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
